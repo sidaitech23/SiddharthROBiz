@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+backend/bin/
+backend/obj/
+frontend/dist/
+frontend/node_modules/
+
+# IDE
+.vs/
+.vscode/
+*.user
+*.suo
+
+# Env
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build
+bin/
+obj/
+publish/
+
+# Misc
+.DS_Store
+Thumbs.db
