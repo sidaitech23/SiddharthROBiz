@@ -1,15 +1,60 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Droplet, Menu, X, Sun, Moon, ChevronDown, ShoppingCart, Home, Wrench, Info, PhoneCall, Mail, MapPin, MessageSquare, Phone } from 'lucide-react';
+import { Droplet, Menu, X, Sun, Moon, ChevronDown, ShoppingCart, Home, Wrench, Info, PhoneCall, Mail, MapPin, MessageSquare, Phone, Search } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useProducts } from '../hooks/useProducts';
+import { useSpareParts } from '../hooks/useSpareParts';
 
 const Navbar = ({ isDarkMode, toggleTheme }) => {
     const { getCartCount } = useCart();
+    const { products } = useProducts();
+    const { parts } = useSpareParts('All');
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isProductDropdownOpen, setIsProductDropdownOpen] = useState(false);
     const location = useLocation();
+
+    // Search state
+    const [searchQuery, setSearchQuery] = useState('');
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const [searchResults, setSearchResults] = useState([]);
+    
+    // Keyboard open detection state
+    const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+
+    useEffect(() => {
+        const handleFocus = (e) => {
+            const tagName = e.target.tagName.toLowerCase();
+            if (tagName === 'input' || tagName === 'textarea') {
+                setIsKeyboardOpen(true);
+            }
+        };
+        const handleBlur = (e) => {
+            const tagName = e.target.tagName.toLowerCase();
+            if (tagName === 'input' || tagName === 'textarea') {
+                setIsKeyboardOpen(false);
+            }
+        };
+        
+        document.addEventListener('focusin', handleFocus);
+        document.addEventListener('focusout', handleBlur);
+        return () => {
+            document.removeEventListener('focusin', handleFocus);
+            document.removeEventListener('focusout', handleBlur);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!searchQuery.trim()) {
+            setSearchResults([]);
+            return;
+        }
+        const query = searchQuery.toLowerCase();
+        const filteredProducts = (products || []).filter(p => p.name.toLowerCase().includes(query)).map(p => ({ ...p, type: 'purifier' }));
+        const filteredParts = (parts || []).filter(p => p.name.toLowerCase().includes(query)).map(p => ({ ...p, type: 'spare-part' }));
+        setSearchResults([...filteredProducts, ...filteredParts]);
+    }, [searchQuery, products, parts]);
 
     const bottomNavLinks = [
         { name: 'Home', href: '/', icon: <Home size={20} /> },
@@ -110,6 +155,49 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
                         </div>
                     ))}
 
+                    {/* Desktop Search Bar */}
+                    <div className="relative flex items-center">
+                        <Search className="absolute left-3.5 text-slate-400 dark:text-slate-500" size={16} />
+                        <input
+                            type="text"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            placeholder="Search purifiers, spare parts..."
+                            className="w-48 xl:w-60 bg-slate-150/80 dark:bg-slate-800/80 border border-transparent focus:border-primary/25 rounded-full pl-9 pr-4 py-1.5 text-xs text-text-dark placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-primary/10 outline-none transition-all font-nunito"
+                        />
+                        {/* Results Dropdown */}
+                        {searchQuery.trim() && (
+                            <div className="absolute top-full right-0 mt-3 w-80 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-border shadow-2xl rounded-2xl p-3 z-[100] max-h-80 overflow-y-auto no-scrollbar">
+                                <div className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2 mb-2">Search Results ({searchResults.length})</div>
+                                <div className="space-y-1">
+                                    {searchResults.length > 0 ? (
+                                        searchResults.map((result) => (
+                                            <Link
+                                                key={`${result.type}-${result.id}`}
+                                                to={result.type === 'purifier' ? `/purifier/${result.id}` : `/spare-part/${result.id}`}
+                                                onClick={() => {
+                                                    setSearchQuery('');
+                                                }}
+                                                className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/40 transition-colors"
+                                            >
+                                                <div className="w-10 h-10 bg-slate-50 dark:bg-slate-800/50 rounded-lg p-1 flex items-center justify-center border border-border">
+                                                    <img src={result.image} alt={result.name} className="max-w-full max-h-full object-contain" />
+                                                </div>
+                                                <div className="flex-grow min-w-0">
+                                                    <div className="text-xs font-bold text-text-dark truncate font-poppins">{result.name}</div>
+                                                    <div className="text-[10px] text-slate-400 capitalize">{result.type === 'purifier' ? 'RO Purifier' : 'Spare Part'}</div>
+                                                </div>
+                                                <div className="text-xs font-black text-primary font-poppins italic">₹{result.price.toLocaleString('en-IN')}</div>
+                                            </Link>
+                                        ))
+                                    ) : (
+                                        <div className="text-center py-4 text-xs text-slate-400 font-bold">No results found for "{searchQuery}"</div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
                     <motion.div
                         key={getCartCount()}
                         initial={{ scale: 1 }}
@@ -145,6 +233,14 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
                 {/* Mobile Actions (No menu toggle required!) */}
                 <div className="lg:hidden flex items-center gap-2">
                     <button
+                        onClick={() => setIsSearchOpen(!isSearchOpen)}
+                        className={`p-2 rounded-xl transition-all duration-300 ${isSearchOpen ? 'bg-primary/10 text-primary' : 'bg-slate-100 dark:bg-slate-800/80 text-text-dark hover:bg-slate-200 dark:hover:bg-slate-700'}`}
+                        aria-label="Toggle Search"
+                    >
+                        <Search size={18} className={isSearchOpen ? 'text-primary' : 'text-slate-700 dark:text-slate-400'} />
+                    </button>
+
+                    <button
                         onClick={toggleTheme}
                         className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800/80 text-text-dark hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300"
                         aria-label="Toggle Theme"
@@ -166,6 +262,62 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
                     </Link>
                 </div>
             </div>
+
+            {/* Mobile Search input dropdown */}
+            <AnimatePresence>
+                {isSearchOpen && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="lg:hidden border-t border-slate-100 dark:border-slate-800/50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl px-4 py-3 shadow-md relative z-40"
+                    >
+                        <div className="relative flex items-center">
+                            <Search className="absolute left-3 text-slate-400 dark:text-slate-500" size={16} />
+                            <input
+                                type="text"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                placeholder="Search purifiers, spare parts..."
+                                className="w-full bg-slate-100 dark:bg-slate-800/80 border border-transparent focus:border-primary/30 rounded-full pl-9 pr-4 py-2 text-xs text-text-dark placeholder-slate-400 focus:ring-2 focus:ring-primary/10 outline-none transition-all font-nunito"
+                                autoFocus
+                            />
+                        </div>
+                        {/* Results Dropdown nested locally */}
+                        {searchQuery.trim() && (
+                            <div className="mt-3 w-full bg-white dark:bg-slate-900 border border-border shadow-xl rounded-2xl p-3 max-h-80 overflow-y-auto no-scrollbar">
+                                <div className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2 mb-2">Search Results ({searchResults.length})</div>
+                                <div className="space-y-1">
+                                    {searchResults.length > 0 ? (
+                                        searchResults.map((result) => (
+                                            <Link
+                                                key={`${result.type}-${result.id}`}
+                                                to={result.type === 'purifier' ? `/purifier/${result.id}` : `/spare-part/${result.id}`}
+                                                onClick={() => {
+                                                    setSearchQuery('');
+                                                    setIsSearchOpen(false);
+                                                }}
+                                                className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/40 transition-colors"
+                                            >
+                                                <div className="w-10 h-10 bg-slate-50 dark:bg-slate-800/50 rounded-lg p-1 flex items-center justify-center border border-border">
+                                                    <img src={result.image} alt={result.name} className="max-w-full max-h-full object-contain" />
+                                                </div>
+                                                <div className="flex-grow min-w-0">
+                                                    <div className="text-xs font-bold text-text-dark truncate font-poppins">{result.name}</div>
+                                                    <div className="text-[10px] text-slate-400 capitalize">{result.type === 'purifier' ? 'RO Purifier' : 'Spare Part'}</div>
+                                                </div>
+                                                <div className="text-xs font-black text-primary font-poppins italic">₹{result.price.toLocaleString('en-IN')}</div>
+                                            </Link>
+                                        ))
+                                    ) : (
+                                        <div className="text-center py-4 text-slate-400 text-xs font-bold">No results found for "{searchQuery}"</div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* Mobile Menu Drawer (Premium Bottom Sheet) */}
             <div className={`lg:hidden fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-sm transition-opacity duration-350 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsMenuOpen(false)}>
@@ -291,7 +443,8 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
         </nav>
 
         {/* Mobile & Tablet Bottom Navigation Bar (Android-style bottom navigation) */}
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-t border-slate-200/50 dark:border-slate-800/80 shadow-[0_-8px_30px_rgba(0,0,0,0.05)] pt-2 pb-5 px-3 flex justify-around items-center">
+        {!isKeyboardOpen && (
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-t border-slate-200/50 dark:border-slate-800/80 shadow-[0_-8px_30px_rgba(0,0,0,0.05)] py-2.5 px-3 flex justify-around items-center h-[72px]">
                 {bottomNavLinks.map((link) => {
                     const isActive = link.isMenuToggle
                         ? isMenuOpen
@@ -351,6 +504,7 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
                     );
                 })}
             </div>
+        )}
         </>
     );
 };

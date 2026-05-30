@@ -71,18 +71,18 @@ const SpareParts = () => {
                     {/* Navigation Arrows */}
                     <button
                         onClick={() => scroll('left')}
-                        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-50 p-4 rounded-full bg-white dark:bg-slate-800 border border-border shadow-2xl text-primary opacity-0 group-hover/slider:opacity-100 group-hover/slider:translate-x-4 transition-all duration-300 hover:scale-110 active:scale-95"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 z-30 p-3.5 rounded-full bg-white/95 dark:bg-slate-800/95 backdrop-blur-md border border-border shadow-lg text-primary lg:opacity-0 lg:group-hover/slider:opacity-100 lg:-translate-x-4 lg:group-hover/slider:translate-x-0 transition-all duration-300 hover:scale-110 active:scale-95"
                         aria-label="Scroll Left"
                     >
-                        <ChevronLeft size={28} />
+                        <ChevronLeft size={24} />
                     </button>
 
                     <button
                         onClick={() => scroll('right')}
-                        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-50 p-4 rounded-full bg-white dark:bg-slate-800 border border-border shadow-2xl text-primary opacity-0 group-hover/slider:opacity-100 group-hover/slider:-translate-x-4 transition-all duration-300 hover:scale-110 active:scale-95"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 z-30 p-3.5 rounded-full bg-white/95 dark:bg-slate-800/95 backdrop-blur-md border border-border shadow-lg text-primary lg:opacity-0 lg:group-hover/slider:opacity-100 lg:translate-x-4 lg:group-hover/slider:translate-x-0 transition-all duration-300 hover:scale-110 active:scale-95"
                         aria-label="Scroll Right"
                     >
-                        <ChevronRight size={28} />
+                        <ChevronRight size={24} />
                     </button>
 
                     <div

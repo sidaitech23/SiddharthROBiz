@@ -163,7 +163,7 @@ const ProductDetails = ({ isDarkMode, type }) => {
                         <div className="mt-auto flex flex-col md:flex-row items-center gap-6 pt-10 border-t border-border">
                             <div className="w-full md:w-auto">
                                 {itemInCart ? (
-                                    <div className="flex items-center justify-between bg-primary text-white rounded-full px-6 py-3 h-[64px] min-w-[180px] shadow-xl shadow-primary/30">
+                                    <div className="flex items-center justify-between bg-gradient-to-r from-primary to-blue-600 text-white rounded-2xl px-6 py-3 h-[64px] min-w-[180px] shadow-md shadow-primary/30">
                                         <button 
                                             onClick={() => {
                                                 if (cartItem.quantity > 1) updateQuantity(product.id, cartItem.quantity - 1);
@@ -184,7 +184,7 @@ const ProductDetails = ({ isDarkMode, type }) => {
                                 ) : (
                                     <button 
                                         onClick={handleAddToCart}
-                                        className="w-full md:w-auto flex items-center justify-center gap-3 bg-primary text-white px-12 py-5 rounded-full font-black text-xl hover:shadow-2xl hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-primary/40"
+                                        className="w-full md:w-auto flex items-center justify-center gap-3 bg-gradient-to-r from-primary to-blue-600 text-white px-12 py-5 rounded-2xl font-black text-xl hover:shadow-lg hover:shadow-primary/20 active:scale-95 transition-all duration-300 shadow-md shadow-primary/30"
                                     >
                                         <ShoppingCart size={24} />
                                         Add to Cart

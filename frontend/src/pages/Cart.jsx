@@ -65,7 +65,7 @@ const Cart = () => {
                     <CheckCircle size={80} className="text-primary mx-auto mb-6" />
                     <h2 className="text-3xl font-bold text-text-dark mb-4 font-poppins">Enquiry Sent!</h2>
                     <p className="text-text-muted mb-8 font-nunito">We have received your enquiry for {getCartCount()} products. Our team will contact you shortly at {formData.mobile}.</p>
-                    <Link to="/" className="inline-block bg-primary text-white px-8 py-3 rounded-xl font-bold hover:shadow-lg transition-all">
+                    <Link to="/" className="inline-block bg-gradient-to-r from-primary to-blue-600 text-white px-8 py-3.5 rounded-2xl font-bold hover:shadow-md hover:shadow-primary/20 transition-all active:scale-95 duration-300">
                         Back to Home
                     </Link>
                 </motion.div>
@@ -84,7 +84,7 @@ const Cart = () => {
                         </div>
                         <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-4 font-poppins tracking-tight">Your Cart is Empty</h2>
                         <p className="text-slate-400 mb-10 font-nunito leading-relaxed px-4">Looks like you haven't added any premium purification products yet. Start your journey to pure health today.</p>
-                        <Link to="/purifiers" className="inline-flex items-center gap-3 bg-primary text-white px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:shadow-2xl hover:shadow-primary/40 transition-all active:scale-95 duration-300">
+                        <Link to="/purifiers" className="inline-flex items-center gap-3 bg-gradient-to-r from-primary to-blue-600 text-white px-10 py-4.5 rounded-2xl font-black uppercase tracking-widest text-xs hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-95 duration-300">
                             Explore Catalog
                         </Link>
                     </div>
@@ -215,7 +215,7 @@ const Cart = () => {
                                 <button 
                                     type="submit" 
                                     disabled={isSubmitting}
-                                    className="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-primary transition-all flex items-center justify-center gap-3 shadow-xl disabled:opacity-50 active:scale-95"
+                                    className="w-full bg-gradient-to-r from-primary to-blue-600 text-white py-4 rounded-2xl font-bold hover:shadow-lg hover:shadow-primary/20 transition-all flex items-center justify-center gap-3 shadow-md disabled:opacity-50 active:scale-95"
                                 >
                                     {isSubmitting ? "Sending..." : (
                                         <>
