@@ -93,7 +93,7 @@ const Purifiers = ({ isDarkMode }) => {
                                                 initial={{ scale: 0.8, opacity: 0 }}
                                                 animate={{ scale: 1, opacity: 1 }}
                                                 onClick={(e) => e.stopPropagation()}
-                                                className="flex items-center justify-between bg-primary text-white rounded-full px-3 py-2 h-[44px] shadow-lg shadow-primary/30"
+                                                className="flex items-center justify-between bg-gradient-to-r from-primary to-blue-600 text-white rounded-2xl px-3 py-1.5 h-[44px] shadow-md shadow-primary/30"
                                             >
                                                 <button 
                                                     onClick={(e) => {

@@ -71,7 +71,7 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
                 </Link>
 
                 {/* Desktop Nav */}
-                <div className="hidden md:flex items-center gap-8">
+                <div className="hidden lg:flex items-center gap-8">
                     {navLinks.map((link) => (
                         <div
                             key={link.name}
@@ -142,8 +142,8 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
                     </button>
                 </div>
 
-                {/* Mobile Actions & Menu Toggle */}
-                <div className="md:hidden flex items-center gap-2">
+                {/* Mobile Actions (No menu toggle required!) */}
+                <div className="lg:hidden flex items-center gap-2">
                     <button
                         onClick={toggleTheme}
                         className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800/80 text-text-dark hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300"
@@ -164,19 +164,11 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
                             </span>
                         )}
                     </Link>
-
-                    <button 
-                        onClick={() => setIsMenuOpen(!isMenuOpen)} 
-                        className="p-2 rounded-xl text-text-dark hover:text-primary transition-colors"
-                        aria-label="Toggle Menu"
-                    >
-                        {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
-                    </button>
                 </div>
             </div>
 
             {/* Mobile Menu Drawer (Premium Bottom Sheet) */}
-            <div className={`md:hidden fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-sm transition-opacity duration-350 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsMenuOpen(false)}>
+            <div className={`lg:hidden fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-sm transition-opacity duration-350 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsMenuOpen(false)}>
                 <div 
                     className={`absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-900 rounded-t-[2.5rem] border-t border-slate-200/50 dark:border-slate-800/50 shadow-2xl p-6 transition-transform duration-500 overflow-y-auto ${isMenuOpen ? 'translate-y-0' : 'translate-y-full'}`}
                     style={{ maxHeight: '85vh' }}
@@ -298,8 +290,8 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
             </div>
         </nav>
 
-        {/* Mobile Floating Bottom Navigation Dock */}
-            <div className="md:hidden fixed bottom-4 left-4 right-4 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border border-slate-200/50 dark:border-slate-800/50 shadow-[0_20px_50px_rgba(0,0,0,0.1)] rounded-2xl py-2 px-3 flex justify-around items-center">
+        {/* Mobile & Tablet Bottom Navigation Bar (Android-style bottom navigation) */}
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-t border-slate-200/50 dark:border-slate-800/80 shadow-[0_-8px_30px_rgba(0,0,0,0.05)] pt-2 pb-5 px-3 flex justify-around items-center">
                 {bottomNavLinks.map((link) => {
                     const isActive = link.isMenuToggle
                         ? isMenuOpen
@@ -308,21 +300,31 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
                             : location.pathname.startsWith(link.href);
                     
                     const content = (
-                        <div className="flex flex-col items-center gap-1">
-                            <div className={`p-2 rounded-2xl transition-all duration-300 ${isActive ? 'bg-primary/10 text-primary scale-110 shadow-sm' : 'text-slate-400 dark:text-slate-500 hover:text-primary'}`}>
+                        <motion.div 
+                            className="flex flex-col items-center gap-1 cursor-pointer select-none"
+                            whileTap={{ scale: 0.9 }}
+                            transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                        >
+                            <div className={`px-5 py-1.5 rounded-full transition-all duration-300 relative ${
+                                isActive 
+                                    ? 'bg-primary/10 text-primary dark:bg-primary/20' 
+                                    : 'text-slate-400 dark:text-slate-500 hover:text-primary'
+                            }`}>
                                 <div className="relative">
                                     {link.icon}
                                     {link.name === 'Cart' && getCartCount() > 0 && (
-                                        <span className="absolute -top-2.5 -right-3 bg-primary text-white text-[8px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center border border-white dark:border-slate-950 shadow-md">
+                                        <span className="absolute -top-2.5 -right-3.5 bg-primary text-white text-[8px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center border border-white dark:border-slate-900 shadow-md">
                                             {getCartCount()}
                                         </span>
                                     )}
                                 </div>
                             </div>
-                            <span className={`text-[9px] font-black uppercase tracking-wider font-poppins transition-colors duration-300 ${isActive ? 'text-primary font-bold' : 'text-slate-400 dark:text-slate-500'}`}>
+                            <span className={`text-[9px] font-black uppercase tracking-widest font-poppins transition-colors duration-300 ${
+                                isActive ? 'text-primary font-bold' : 'text-slate-400 dark:text-slate-500'
+                            }`}>
                                 {link.name}
                             </span>
-                        </div>
+                        </motion.div>
                     );
 
                     if (link.isMenuToggle) {
@@ -332,7 +334,7 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                                 className="focus:outline-none"
                             >
-                                    {content}
+                                {content}
                             </button>
                         );
                     }

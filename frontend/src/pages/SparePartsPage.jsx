@@ -111,7 +111,7 @@ const SparePartsPage = ({ isDarkMode }) => {
                                                         initial={{ scale: 0.8, opacity: 0 }}
                                                         animate={{ scale: 1, opacity: 1 }}
                                                         onClick={(e) => e.stopPropagation()}
-                                                        className="flex items-center justify-between bg-primary text-white rounded-full px-2 py-1.5 h-[32px] shadow-lg shadow-primary/20 transition-all"
+                                                        className="flex items-center justify-between bg-gradient-to-r from-primary to-blue-600 text-white rounded-2xl px-2 py-1 h-[32px] shadow-md shadow-primary/20 transition-all"
                                                     >
                                                         <button 
                                                             onClick={(e) => {
@@ -141,7 +141,7 @@ const SparePartsPage = ({ isDarkMode }) => {
                                                             e.stopPropagation();
                                                             handleAddToCart(part, e);
                                                         }}
-                                                        className="w-full py-2 rounded-xl font-black uppercase tracking-widest text-[8px] transition-all flex items-center justify-center gap-1.5 bg-primary text-white hover:bg-primary-dark hover:shadow-primary/40 active:scale-95 duration-300"
+                                                        className="w-full py-2.5 rounded-2xl font-black uppercase tracking-widest text-[8px] transition-all flex items-center justify-center gap-1.5 bg-gradient-to-r from-primary to-blue-600 text-white hover:shadow-md hover:shadow-primary/20 active:scale-95 duration-300"
                                                     >
                                                         <ShoppingCart size={10} />
                                                         Add
