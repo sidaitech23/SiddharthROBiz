@@ -16,7 +16,7 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
         { name: 'Purifiers', href: '/purifiers', icon: <Droplet size={20} /> },
         { name: 'Spares', href: '/spare-parts', icon: <Wrench size={20} /> },
         { name: 'Cart', href: '/cart', icon: <ShoppingCart size={20} /> },
-        { name: 'Menu', href: '#', isMenuToggle: true }
+        { name: 'Menu', href: '#', isMenuToggle: true, icon: isMenuOpen ? <X size={20} /> : <Menu size={20} /> }
     ];
 
     useEffect(() => {
@@ -42,29 +42,29 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
     ];
 
     return (
-        <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled
+        <>
+            <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled
                 ? 'bg-white/90 dark:bg-slate-950/90 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] py-2'
                 : 'bg-transparent py-6'
             }`}>
             <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
-                <Link to="/" className="flex items-center gap-4 cursor-pointer group">
+                <Link to="/" className="flex items-center gap-2 md:gap-4 cursor-pointer group">
                     <div className="relative">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-all duration-500 overflow-hidden">
-                            <Droplet className="text-white fill-white/20" size={28} />
+                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-all duration-500 overflow-hidden">
+                            <Droplet className="text-white fill-white/20" size={24} />
                             <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         </div>
-
                     </div>
                     <div className="flex flex-col">
                         <div className="flex items-center gap-1">
-                            <span className="text-2xl font-black font-poppins text-text-dark tracking-tighter leading-none">
+                            <span className="text-xl md:text-2xl font-black font-poppins text-text-dark tracking-tighter leading-none">
                                 SIDDHARTH
                             </span>
-                            <span className="text-2xl font-black font-poppins text-primary italic leading-none">
+                            <span className="text-xl md:text-2xl font-black font-poppins text-primary italic leading-none">
                                 RO
                             </span>
                         </div>
-                        <span className="text-[10px] font-black text-primary tracking-[0.4em] uppercase leading-none mt-2 border-t border-primary/20 pt-1.5 opacity-80">
+                        <span className="text-[8px] md:text-[10px] font-black text-primary tracking-[0.4em] uppercase leading-none mt-1.5 border-t border-primary/20 pt-1.5 opacity-80">
                             Premium Purification
                         </span>
                     </div>
@@ -142,10 +142,35 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
                     </button>
                 </div>
 
-                {/* Mobile Toggle */}
-                <div className="md:hidden flex items-center gap-4">
-                    <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-text-dark">
-                        {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+                {/* Mobile Actions & Menu Toggle */}
+                <div className="md:hidden flex items-center gap-2">
+                    <button
+                        onClick={toggleTheme}
+                        className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800/80 text-text-dark hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300"
+                        aria-label="Toggle Theme"
+                    >
+                        {isDarkMode ? <Sun size={18} className="text-yellow-400" /> : <Moon size={18} className="text-slate-700 dark:text-slate-400" />}
+                    </button>
+
+                    <Link
+                        to="/cart"
+                        className="relative p-2 text-text-dark hover:text-primary transition-all duration-300 flex items-center"
+                        aria-label="View Cart"
+                    >
+                        <ShoppingCart size={20} />
+                        {getCartCount() > 0 && (
+                            <span className="absolute top-0 right-0 bg-primary text-white text-[9px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center border border-white dark:border-slate-900 shadow-md">
+                                {getCartCount()}
+                            </span>
+                        )}
+                    </Link>
+
+                    <button 
+                        onClick={() => setIsMenuOpen(!isMenuOpen)} 
+                        className="p-2 rounded-xl text-text-dark hover:text-primary transition-colors"
+                        aria-label="Toggle Menu"
+                    >
+                        {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
                     </button>
                 </div>
             </div>
@@ -204,25 +229,43 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
                     </button>
                 </div>
             </div>
+        </nav>
 
-            {/* Mobile Floating Bottom Navigation Dock */}
+        {/* Mobile Floating Bottom Navigation Dock */}
             <div className="md:hidden fixed bottom-4 left-4 right-4 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border border-slate-200/50 dark:border-slate-800/50 shadow-[0_20px_50px_rgba(0,0,0,0.1)] rounded-2xl py-2 px-3 flex justify-around items-center">
                 {bottomNavLinks.map((link) => {
                     const isActive = link.isMenuToggle
-                        ? false
+                        ? isMenuOpen
                         : link.href === '/'
                             ? location.pathname === '/'
                             : location.pathname.startsWith(link.href);
                     
+                    const content = (
+                        <div className="flex flex-col items-center gap-1">
+                            <div className={`p-2 rounded-2xl transition-all duration-300 ${isActive ? 'bg-primary/10 text-primary scale-110 shadow-sm' : 'text-slate-400 dark:text-slate-500 hover:text-primary'}`}>
+                                <div className="relative">
+                                    {link.icon}
+                                    {link.name === 'Cart' && getCartCount() > 0 && (
+                                        <span className="absolute -top-2.5 -right-3 bg-primary text-white text-[8px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center border border-white dark:border-slate-950 shadow-md">
+                                            {getCartCount()}
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+                            <span className={`text-[9px] font-black uppercase tracking-wider font-poppins transition-colors duration-300 ${isActive ? 'text-primary font-bold' : 'text-slate-400 dark:text-slate-500'}`}>
+                                {link.name}
+                            </span>
+                        </div>
+                    );
+
                     if (link.isMenuToggle) {
                         return (
                             <button
                                 key={link.name}
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                                className={`flex flex-col items-center gap-1 p-1 rounded-xl transition-all duration-300 ${isMenuOpen ? 'text-primary scale-105' : 'text-slate-400 dark:text-slate-500 hover:text-primary'}`}
+                                className="focus:outline-none"
                             >
-                                {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
-                                <span className="text-[9px] font-black uppercase tracking-wider font-poppins">{link.name}</span>
+                                    {content}
                             </button>
                         );
                     }
@@ -232,25 +275,14 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
                             key={link.name}
                             to={link.href}
                             onClick={() => setIsMenuOpen(false)}
-                            className={`flex flex-col items-center gap-1 p-1 rounded-xl transition-all duration-300 relative ${isActive ? 'text-primary scale-105' : 'text-slate-400 dark:text-slate-500 hover:text-primary'}`}
+                            className="focus:outline-none"
                         >
-                            <div className="relative">
-                                {link.icon}
-                                {link.name === 'Cart' && getCartCount() > 0 && (
-                                    <span className="absolute -top-1.5 -right-2 bg-primary text-white text-[8px] font-black w-4 h-4 rounded-full flex items-center justify-center border border-white dark:border-slate-950 shadow-md">
-                                        {getCartCount()}
-                                    </span>
-                                )}
-                            </div>
-                            <span className="text-[9px] font-black uppercase tracking-wider font-poppins">{link.name}</span>
-                            {isActive && (
-                                <span className="absolute bottom-0 w-1 h-1 rounded-full bg-primary"></span>
-                            )}
+                            {content}
                         </Link>
                     );
                 })}
             </div>
-        </nav>
+        </>
     );
 };
 

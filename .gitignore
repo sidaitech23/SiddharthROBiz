@@ -26,3 +26,8 @@ publish/
 # Misc
 .DS_Store
 Thumbs.db
+
+# SQLite temporary files
+*.db-shm
+*.db-wal
+*.db.bak
