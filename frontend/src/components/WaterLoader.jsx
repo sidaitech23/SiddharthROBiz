@@ -50,7 +50,7 @@ const WaterLoader = ({ size = 'large' }) => {
     }
 
     return (
-        <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-slate-950/85 backdrop-blur-lg">
+        <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white/10 dark:bg-slate-950/20 backdrop-blur-[3px]">
             {/* Ambient Background Glow */}
             <div className="absolute w-[350px] h-[350px] bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
 
