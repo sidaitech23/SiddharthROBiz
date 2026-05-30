@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Droplet, Menu, X, Sun, Moon, ChevronDown, ShoppingCart } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { Droplet, Menu, X, Sun, Moon, ChevronDown, ShoppingCart, Home, Wrench } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { motion } from 'framer-motion';
 
@@ -9,6 +9,15 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isProductDropdownOpen, setIsProductDropdownOpen] = useState(false);
+    const location = useLocation();
+
+    const bottomNavLinks = [
+        { name: 'Home', href: '/', icon: <Home size={20} /> },
+        { name: 'Purifiers', href: '/purifiers', icon: <Droplet size={20} /> },
+        { name: 'Spares', href: '/spare-parts', icon: <Wrench size={20} /> },
+        { name: 'Cart', href: '/cart', icon: <ShoppingCart size={20} /> },
+        { name: 'Menu', href: '#', isMenuToggle: true }
+    ];
 
     useEffect(() => {
         const handleScroll = () => {
@@ -194,6 +203,52 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
                         {isDarkMode ? "Light Mode" : "Dark Mode"}
                     </button>
                 </div>
+            </div>
+
+            {/* Mobile Floating Bottom Navigation Dock */}
+            <div className="md:hidden fixed bottom-4 left-4 right-4 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border border-slate-200/50 dark:border-slate-800/50 shadow-[0_20px_50px_rgba(0,0,0,0.1)] rounded-2xl py-2 px-3 flex justify-around items-center">
+                {bottomNavLinks.map((link) => {
+                    const isActive = link.isMenuToggle
+                        ? false
+                        : link.href === '/'
+                            ? location.pathname === '/'
+                            : location.pathname.startsWith(link.href);
+                    
+                    if (link.isMenuToggle) {
+                        return (
+                            <button
+                                key={link.name}
+                                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                                className={`flex flex-col items-center gap-1 p-1 rounded-xl transition-all duration-300 ${isMenuOpen ? 'text-primary scale-105' : 'text-slate-400 dark:text-slate-500 hover:text-primary'}`}
+                            >
+                                {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                                <span className="text-[9px] font-black uppercase tracking-wider font-poppins">{link.name}</span>
+                            </button>
+                        );
+                    }
+
+                    return (
+                        <Link
+                            key={link.name}
+                            to={link.href}
+                            onClick={() => setIsMenuOpen(false)}
+                            className={`flex flex-col items-center gap-1 p-1 rounded-xl transition-all duration-300 relative ${isActive ? 'text-primary scale-105' : 'text-slate-400 dark:text-slate-500 hover:text-primary'}`}
+                        >
+                            <div className="relative">
+                                {link.icon}
+                                {link.name === 'Cart' && getCartCount() > 0 && (
+                                    <span className="absolute -top-1.5 -right-2 bg-primary text-white text-[8px] font-black w-4 h-4 rounded-full flex items-center justify-center border border-white dark:border-slate-950 shadow-md">
+                                        {getCartCount()}
+                                    </span>
+                                )}
+                            </div>
+                            <span className="text-[9px] font-black uppercase tracking-wider font-poppins">{link.name}</span>
+                            {isActive && (
+                                <span className="absolute bottom-0 w-1 h-1 rounded-full bg-primary"></span>
+                            )}
+                        </Link>
+                    );
+                })}
             </div>
         </nav>
     );

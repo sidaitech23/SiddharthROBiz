@@ -39,7 +39,7 @@ function App() {
         <ScrollToHash />
         <div className="min-h-screen bg-bg-light transition-colors duration-300">
           <Navbar isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
-          <main>
+          <main className="pb-24 md:pb-0">
             <Routes>
               <Route path="/" element={<Home isDarkMode={isDarkMode} />} />
               <Route path="/purifiers" element={<Purifiers isDarkMode={isDarkMode} />} />
