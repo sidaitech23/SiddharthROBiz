@@ -24,21 +24,22 @@ const Hero = ({ isDarkMode }) => {
                 />
             ))}
 
-            <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center relative z-10">
+            <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center relative z-10 text-center lg:text-left">
                 <motion.div
                     initial={{ opacity: 0, x: -50 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
+                    className="flex flex-col items-center lg:items-start"
                 >
                     <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-text-dark leading-tight mb-4 lg:mb-6 font-poppins">
                         Pure Water. <br />
                         <span className="text-primary">Healthy Life.</span>
                     </h1>
-                    <p className="text-lg lg:text-xl text-text-muted mb-6 lg:mb-8 max-w-lg font-nunito">
+                    <p className="text-lg lg:text-xl text-text-muted mb-6 lg:mb-8 max-w-lg font-nunito mx-auto lg:mx-0">
                         India's Most Trusted RO Purifiers for Every Home. Get 100% pure water with our advanced 5-stage purification technology.
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4">
+                    <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center lg:justify-start">
                         <button
                             onClick={() => navigate('/purifiers')}
                             className="bg-gradient-to-r from-primary to-blue-600 text-white px-10 py-4 rounded-2xl font-bold text-lg hover:shadow-[0_15px_30px_rgba(2,132,199,0.4)] active:scale-[0.98] transition-all duration-300 shadow-lg text-center flex items-center justify-center gap-2 group"
@@ -54,32 +55,6 @@ const Hero = ({ isDarkMode }) => {
                         >
                             Shop Spare Parts
                         </button>
-                    </div>
-
-                    <div className="mt-10 lg:mt-16 flex lg:grid lg:grid-cols-3 overflow-x-auto lg:overflow-visible gap-3 lg:gap-6 pb-4 lg:pb-0 -mx-4 px-4 lg:mx-0 lg:px-0 no-scrollbar snap-x snap-mandatory">
-                        {[
-                            { icon: <ShieldCheck className="text-primary" />, title: "ISI Certified", sub: "Safety Guaranteed" },
-                            { icon: <UserCheck className="text-primary" />, title: "Expert Techs", sub: "Professional Care" },
-                            { icon: <Wrench className="text-primary" />, title: "Free Install", sub: "Zero Extra Cost" },
-                            { icon: <Headset className="text-primary" />, title: "24/7 Support", sub: "Always Here" },
-                            { icon: <Heart className="text-primary" />, title: "Full Warranty", sub: "Peace of Mind" }
-                        ].map((item, i) => (
-                            <motion.div
-                                key={i}
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.5 + (i * 0.1) }}
-                                className="flex-shrink-0 lg:shrink snap-start flex items-center gap-3 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md p-3 rounded-2xl border border-white/20 dark:border-slate-700/30 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all group"
-                            >
-                                <div className="bg-white dark:bg-slate-800 p-2 rounded-xl shadow-sm group-hover:scale-110 transition-transform">
-                                    {React.cloneElement(item.icon, { size: 20 })}
-                                </div>
-                                <div>
-                                    <h4 className="text-sm font-bold text-text-dark font-poppins">{item.title}</h4>
-                                    <p className="text-[10px] text-text-muted font-nunito">{item.sub}</p>
-                                </div>
-                            </motion.div>
-                        ))}
                     </div>
                 </motion.div>
 
@@ -111,6 +86,33 @@ const Hero = ({ isDarkMode }) => {
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary/20 dark:bg-primary/10 rounded-full -z-10 blur-[150px] animate-pulse"></div>
                     <div className="absolute -top-10 -right-10 w-40 h-40 bg-accent/20 rounded-full -z-10 blur-[80px]"></div>
                 </motion.div>
+
+                {/* Service Badges Row at the bottom of the grid layout */}
+                <div className="lg:col-span-2 w-full mt-10 lg:mt-16 flex lg:grid lg:grid-cols-5 overflow-x-auto lg:overflow-visible gap-3 lg:gap-6 pb-4 lg:pb-0 -mx-4 px-4 lg:mx-0 lg:px-0 no-scrollbar snap-x snap-mandatory">
+                    {[
+                        { icon: <ShieldCheck className="text-primary" />, title: "ISI Certified", sub: "Safety Guaranteed" },
+                        { icon: <UserCheck className="text-primary" />, title: "Expert Techs", sub: "Professional Care" },
+                        { icon: <Wrench className="text-primary" />, title: "Free Install", sub: "Zero Extra Cost" },
+                        { icon: <Headset className="text-primary" />, title: "24/7 Support", sub: "Always Here" },
+                        { icon: <Heart className="text-primary" />, title: "Full Warranty", sub: "Peace of Mind" }
+                    ].map((item, i) => (
+                        <motion.div
+                            key={i}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.5 + (i * 0.1) }}
+                            className="flex-shrink-0 lg:shrink snap-start flex items-center gap-3 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md p-3 rounded-2xl border border-white/20 dark:border-slate-700/30 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all group"
+                        >
+                            <div className="bg-white dark:bg-slate-800 p-2 rounded-xl shadow-sm group-hover:scale-110 transition-transform">
+                                {React.cloneElement(item.icon, { size: 20 })}
+                            </div>
+                            <div>
+                                <h4 className="text-sm font-bold text-text-dark font-poppins">{item.title}</h4>
+                                <p className="text-[10px] text-text-muted font-nunito">{item.sub}</p>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
             </div>
         </section>
     );

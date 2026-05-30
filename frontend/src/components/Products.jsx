@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useProducts } from '../hooks/useProducts';
@@ -13,7 +13,34 @@ const Products = () => {
     const navigate = useNavigate();
     const [addedId, setAddedId] = useState(null);
     const [flyingImage, setFlyingImage] = useState(null);
+    const [activeIndex, setActiveIndex] = useState(0);
     const cartIconRef = typeof document !== 'undefined' ? document.querySelector('[aria-label="View Cart"]') : null;
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (scrollRef.current) {
+                const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+                const totalScrollable = scrollWidth - clientWidth;
+                if (totalScrollable <= 0) return;
+                const percentage = scrollLeft / totalScrollable;
+                const newIndex = Math.min(
+                    products.length - 1,
+                    Math.max(0, Math.round(percentage * (products.length - 1)))
+                );
+                setActiveIndex(newIndex);
+            }
+        };
+
+        const el = scrollRef.current;
+        if (el) {
+            el.addEventListener('scroll', handleScroll, { passive: true });
+        }
+        return () => {
+            if (el) {
+                el.removeEventListener('scroll', handleScroll);
+            }
+        };
+    }, [products]);
 
     const handleAddToCart = (product, e) => {
         addToCart(product);
@@ -89,7 +116,7 @@ const Products = () => {
                                 key={product.id}
                                 initial="initial"
                                 whileHover="hover"
-                                className="min-w-[270px] sm:min-w-[310px] md:min-w-[340px] snap-start bg-white dark:bg-slate-900 rounded-[2rem] lg:rounded-[2.5rem] border border-slate-100 dark:border-slate-800 overflow-hidden hover:shadow-[0_40px_80px_-15px_rgba(14,165,233,0.15)] hover:-translate-y-2 transition-all duration-500 group/card flex flex-col relative cursor-pointer"
+                                className="min-w-[270px] sm:min-w-[310px] md:min-w-[340px] snap-center bg-white dark:bg-slate-900 rounded-[2rem] lg:rounded-[2.5rem] border border-slate-100 dark:border-slate-800 overflow-hidden hover:shadow-[0_40px_80px_-15px_rgba(14,165,233,0.15)] hover:-translate-y-2 transition-all duration-500 group/card flex flex-col relative cursor-pointer"
                                 onClick={() => navigate(`/purifier/${product.id}`)}
                             >
                                 {/* Product Image Wrapper */}
@@ -177,6 +204,31 @@ const Products = () => {
                                     </div>
                                 </div>
                             </motion.div>
+                        ))}
+                    </div>
+
+                    {/* Indicator Dots */}
+                    <div className="flex justify-center gap-1.5 mt-4 lg:hidden">
+                        {products.map((_, idx) => (
+                            <button
+                                key={idx}
+                                onClick={() => {
+                                    if (scrollRef.current) {
+                                        const children = scrollRef.current.children;
+                                        if (children[idx]) {
+                                            children[idx].scrollIntoView({
+                                                behavior: 'smooth',
+                                                block: 'nearest',
+                                                inline: 'center'
+                                            });
+                                        }
+                                    }
+                                }}
+                                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                                    activeIndex === idx ? 'bg-primary w-6' : 'bg-slate-200 dark:bg-slate-800'
+                                }`}
+                                aria-label={`Go to slide ${idx + 1}`}
+                            />
                         ))}
                     </div>
                 </div>

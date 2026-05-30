@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useSpareParts } from '../hooks/useSpareParts';
@@ -14,7 +14,34 @@ const SpareParts = () => {
     const navigate = useNavigate();
     const [addedId, setAddedId] = useState(null);
     const [flyingImage, setFlyingImage] = useState(null);
+    const [activeIndex, setActiveIndex] = useState(0);
     const cartIconRef = typeof document !== 'undefined' ? document.querySelector('[aria-label="View Cart"]') : null;
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (scrollRef.current) {
+                const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+                const totalScrollable = scrollWidth - clientWidth;
+                if (totalScrollable <= 0) return;
+                const percentage = scrollLeft / totalScrollable;
+                const newIndex = Math.min(
+                    parts.length - 1,
+                    Math.max(0, Math.round(percentage * (parts.length - 1)))
+                );
+                setActiveIndex(newIndex);
+            }
+        };
+
+        const el = scrollRef.current;
+        if (el) {
+            el.addEventListener('scroll', handleScroll, { passive: true });
+        }
+        return () => {
+            if (el) {
+                el.removeEventListener('scroll', handleScroll);
+            }
+        };
+    }, [parts]);
 
     const handleAddToCart = (product, e) => {
         addToCart(product);
@@ -94,7 +121,7 @@ const SpareParts = () => {
                                 key={part.id}
                                 initial="initial"
                                 whileHover="hover"
-                                className="min-w-[270px] sm:min-w-[310px] md:min-w-[340px] snap-start bg-card rounded-[2rem] lg:rounded-[2.5rem] border border-border overflow-hidden hover:shadow-[0_30px_60px_rgba(0,0,0,0.12)] transition-all duration-500 group/card flex flex-col relative cursor-pointer"
+                                className="min-w-[270px] sm:min-w-[310px] md:min-w-[340px] snap-center bg-card rounded-[2rem] lg:rounded-[2.5rem] border border-border overflow-hidden hover:shadow-[0_30px_60px_rgba(0,0,0,0.12)] transition-all duration-500 group/card flex flex-col relative cursor-pointer"
                                 onClick={() => navigate(`/spare-part/${part.id}`)}
                             >
                                 {/* Product Image Wrapper */}
@@ -176,6 +203,31 @@ const SpareParts = () => {
                                     </div>
                                 </div>
                             </motion.div>
+                        ))}
+                    </div>
+
+                    {/* Indicator Dots */}
+                    <div className="flex justify-center gap-1.5 mt-4 lg:hidden">
+                        {parts.map((_, idx) => (
+                            <button
+                                key={idx}
+                                onClick={() => {
+                                    if (scrollRef.current) {
+                                        const children = scrollRef.current.children;
+                                        if (children[idx]) {
+                                            children[idx].scrollIntoView({
+                                                behavior: 'smooth',
+                                                block: 'nearest',
+                                                inline: 'center'
+                                            });
+                                        }
+                                    }
+                                }}
+                                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                                    activeIndex === idx ? 'bg-primary w-6' : 'bg-slate-200 dark:bg-slate-800'
+                                }`}
+                                aria-label={`Go to slide ${idx + 1}`}
+                            />
                         ))}
                     </div>
                 </div>
