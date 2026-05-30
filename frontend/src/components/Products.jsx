@@ -53,11 +53,11 @@ const Products = () => {
     if (error) return <div className="text-center py-20 text-red-500">Error loading products: {error}</div>;
 
     return (
-        <section id="products" className="pt-10 pb-4 bg-bg-light transition-colors duration-300 relative overflow-hidden">
+        <section id="products" className="pt-8 lg:pt-12 pb-4 bg-bg-light transition-colors duration-300 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4">
-                <div className="text-center mb-12">
-                    <h2 className="text-4xl font-bold text-text-dark mb-4 font-poppins tracking-tight">Popular RO Purifiers</h2>
-                    <p className="text-text-muted max-w-lg mx-auto font-nunito text-lg">Choose from our premium range of high-performance RO systems.</p>
+                <div className="text-center mb-6 lg:mb-12">
+                    <h2 className="text-3xl lg:text-4xl font-bold text-text-dark mb-3 lg:mb-4 font-poppins tracking-tight">Popular RO Purifiers</h2>
+                    <p className="text-text-muted max-w-lg mx-auto font-nunito text-sm lg:text-lg">Choose from our premium range of high-performance RO systems.</p>
                 </div>
 
                 {/* Products Row with Side Arrows */}
@@ -65,7 +65,7 @@ const Products = () => {
                     {/* Navigation Arrows */}
                     <button
                         onClick={() => scroll('left')}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 z-30 p-3.5 rounded-full bg-white/95 dark:bg-slate-800/95 backdrop-blur-md border border-border shadow-lg text-primary lg:opacity-0 lg:group-hover/slider:opacity-100 lg:-translate-x-4 lg:group-hover/slider:translate-x-0 transition-all duration-300 hover:scale-110 active:scale-95"
+                        className="hidden lg:flex absolute left-2 top-1/2 -translate-y-1/2 z-30 p-3.5 rounded-full bg-white/95 dark:bg-slate-800/95 backdrop-blur-md border border-border shadow-lg text-primary lg:opacity-0 lg:group-hover/slider:opacity-100 lg:-translate-x-4 lg:group-hover/slider:translate-x-0 transition-all duration-300 hover:scale-110 active:scale-95 items-center justify-center"
                         aria-label="Scroll Left"
                     >
                         <ChevronLeft size={24} />
@@ -73,7 +73,7 @@ const Products = () => {
 
                     <button
                         onClick={() => scroll('right')}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 z-30 p-3.5 rounded-full bg-white/95 dark:bg-slate-800/95 backdrop-blur-md border border-border shadow-lg text-primary lg:opacity-0 lg:group-hover/slider:opacity-100 lg:translate-x-4 lg:group-hover/slider:translate-x-0 transition-all duration-300 hover:scale-110 active:scale-95"
+                        className="hidden lg:flex absolute right-2 top-1/2 -translate-y-1/2 z-30 p-3.5 rounded-full bg-white/95 dark:bg-slate-800/95 backdrop-blur-md border border-border shadow-lg text-primary lg:opacity-0 lg:group-hover/slider:opacity-100 lg:translate-x-4 lg:group-hover/slider:translate-x-0 transition-all duration-300 hover:scale-110 active:scale-95 items-center justify-center"
                         aria-label="Scroll Right"
                     >
                         <ChevronRight size={24} />
@@ -81,7 +81,7 @@ const Products = () => {
 
                     <div
                         ref={scrollRef}
-                        className="flex overflow-x-auto gap-6 no-scrollbar snap-x snap-mandatory touch-pan-x scroll-smooth items-stretch"
+                        className="flex overflow-x-auto gap-4 lg:gap-6 pb-6 lg:pb-0 no-scrollbar snap-x snap-mandatory touch-pan-x scroll-smooth items-stretch px-4 -mx-4 lg:px-0 lg:mx-0"
                         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                     >
                         {products.map((product, index) => (
@@ -89,7 +89,7 @@ const Products = () => {
                                 key={product.id}
                                 initial="initial"
                                 whileHover="hover"
-                                className="min-w-[300px] md:min-w-[340px] snap-start bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 overflow-hidden hover:shadow-[0_40px_80px_-15px_rgba(14,165,233,0.15)] hover:-translate-y-2 transition-all duration-500 group/card flex flex-col relative cursor-pointer"
+                                className="min-w-[270px] sm:min-w-[310px] md:min-w-[340px] snap-start bg-white dark:bg-slate-900 rounded-[2rem] lg:rounded-[2.5rem] border border-slate-100 dark:border-slate-800 overflow-hidden hover:shadow-[0_40px_80px_-15px_rgba(14,165,233,0.15)] hover:-translate-y-2 transition-all duration-500 group/card flex flex-col relative cursor-pointer"
                                 onClick={() => navigate(`/purifier/${product.id}`)}
                             >
                                 {/* Product Image Wrapper */}

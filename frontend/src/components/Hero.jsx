@@ -9,7 +9,7 @@ const Hero = ({ isDarkMode }) => {
         <section className={`relative min-h-[70vh] flex items-center overflow-hidden transition-colors duration-700 ${isDarkMode
             ? 'bg-gradient-to-b from-slate-950 via-slate-900 to-bg-primary'
             : 'bg-gradient-to-b from-blue-50/50 via-white to-bg-primary'
-            } pt-28 pb-16`}>
+            } pt-20 lg:pt-28 pb-8 lg:pb-16`}>
             {/* Background Bubbles */}
             {[...Array(15)].map((_, i) => (
                 <div
@@ -24,18 +24,18 @@ const Hero = ({ isDarkMode }) => {
                 />
             ))}
 
-            <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center relative z-10">
+            <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center relative z-10">
                 <motion.div
                     initial={{ opacity: 0, x: -50 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
                 >
-                    <h1 className="text-5xl md:text-7xl font-bold text-text-dark leading-tight mb-6 font-poppins">
+                    <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-text-dark leading-tight mb-4 lg:mb-6 font-poppins">
                         Pure Water. <br />
                         <span className="text-primary">Healthy Life.</span>
                     </h1>
-                    <p className="text-xl text-text-muted mb-8 max-w-lg font-nunito">
+                    <p className="text-lg lg:text-xl text-text-muted mb-6 lg:mb-8 max-w-lg font-nunito">
                         India's Most Trusted RO Purifiers for Every Home. Get 100% pure water with our advanced 5-stage purification technology.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4">
@@ -56,7 +56,7 @@ const Hero = ({ isDarkMode }) => {
                         </button>
                     </div>
 
-                    <div className="mt-16 grid grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="mt-10 lg:mt-16 flex lg:grid lg:grid-cols-3 overflow-x-auto lg:overflow-visible gap-3 lg:gap-6 pb-4 lg:pb-0 -mx-4 px-4 lg:mx-0 lg:px-0 no-scrollbar snap-x snap-mandatory">
                         {[
                             { icon: <ShieldCheck className="text-primary" />, title: "ISI Certified", sub: "Safety Guaranteed" },
                             { icon: <UserCheck className="text-primary" />, title: "Expert Techs", sub: "Professional Care" },
@@ -69,7 +69,7 @@ const Hero = ({ isDarkMode }) => {
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.5 + (i * 0.1) }}
-                                className="flex items-center gap-3 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md p-3 rounded-2xl border border-white/20 dark:border-slate-700/30 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all group"
+                                className="flex-shrink-0 lg:shrink snap-start flex items-center gap-3 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md p-3 rounded-2xl border border-white/20 dark:border-slate-700/30 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all group"
                             >
                                 <div className="bg-white dark:bg-slate-800 p-2 rounded-xl shadow-sm group-hover:scale-110 transition-transform">
                                     {React.cloneElement(item.icon, { size: 20 })}
@@ -88,15 +88,15 @@ const Hero = ({ isDarkMode }) => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 1, delay: 0.2 }}
-                    className="relative"
+                    className="relative mt-8 lg:mt-0"
                 >
-                    <div className="relative z-10 p-4">
+                    <div className="relative z-10 p-4 max-w-md mx-auto lg:max-w-none">
                         {/* Modern Organic Mask for seamless integration */}
                         <motion.div
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 1.5, ease: "easeOut" }}
-                            className="relative rounded-[4rem] md:rounded-[8rem] lg:rounded-[12rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.2)] border-8 border-white/20 backdrop-blur-sm"
+                            className="relative rounded-[3rem] md:rounded-[6rem] lg:rounded-[12rem] overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.15)] border-4 lg:border-8 border-white/20 backdrop-blur-sm"
                         >
                             <img
                                 src="/images/hero-family-purifier-final.png"

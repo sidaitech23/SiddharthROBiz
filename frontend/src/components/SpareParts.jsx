@@ -56,12 +56,12 @@ const SpareParts = () => {
     return (
         <section id="spare-parts" className="pt-4 pb-4 bg-bg-light transition-colors duration-300 overflow-hidden">
             <div className="max-w-7xl mx-auto px-4">
-                <div className="flex justify-between items-end mb-12">
+                <div className="flex justify-between items-end mb-6 lg:mb-12">
                     <div>
-                        <h2 className="text-4xl font-bold text-text-dark mb-4 font-poppins">Genuine Spare Parts</h2>
+                        <h2 className="text-3xl lg:text-4xl font-bold text-text-dark mb-3 lg:mb-4 font-poppins">Genuine Spare Parts</h2>
                         <div className="flex items-center gap-2">
                             <div className="w-12 h-1 bg-primary rounded-full"></div>
-                            <p className="text-text-muted font-nunito font-semibold tracking-wide uppercase text-sm">100% Original Components</p>
+                            <p className="text-text-muted font-nunito font-semibold tracking-wide uppercase text-xs lg:text-sm">100% Original Components</p>
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@ const SpareParts = () => {
                     {/* Navigation Arrows */}
                     <button
                         onClick={() => scroll('left')}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 z-30 p-3.5 rounded-full bg-white/95 dark:bg-slate-800/95 backdrop-blur-md border border-border shadow-lg text-primary lg:opacity-0 lg:group-hover/slider:opacity-100 lg:-translate-x-4 lg:group-hover/slider:translate-x-0 transition-all duration-300 hover:scale-110 active:scale-95"
+                        className="hidden lg:flex absolute left-2 top-1/2 -translate-y-1/2 z-30 p-3.5 rounded-full bg-white/95 dark:bg-slate-800/95 backdrop-blur-md border border-border shadow-lg text-primary lg:opacity-0 lg:group-hover/slider:opacity-100 lg:-translate-x-4 lg:group-hover/slider:translate-x-0 transition-all duration-300 hover:scale-110 active:scale-95 items-center justify-center"
                         aria-label="Scroll Left"
                     >
                         <ChevronLeft size={24} />
@@ -79,7 +79,7 @@ const SpareParts = () => {
 
                     <button
                         onClick={() => scroll('right')}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 z-30 p-3.5 rounded-full bg-white/95 dark:bg-slate-800/95 backdrop-blur-md border border-border shadow-lg text-primary lg:opacity-0 lg:group-hover/slider:opacity-100 lg:translate-x-4 lg:group-hover/slider:translate-x-0 transition-all duration-300 hover:scale-110 active:scale-95"
+                        className="hidden lg:flex absolute right-2 top-1/2 -translate-y-1/2 z-30 p-3.5 rounded-full bg-white/95 dark:bg-slate-800/95 backdrop-blur-md border border-border shadow-lg text-primary lg:opacity-0 lg:group-hover/slider:opacity-100 lg:translate-x-4 lg:group-hover/slider:translate-x-0 transition-all duration-300 hover:scale-110 active:scale-95 items-center justify-center"
                         aria-label="Scroll Right"
                     >
                         <ChevronRight size={24} />
@@ -87,14 +87,14 @@ const SpareParts = () => {
 
                     <div
                         ref={scrollRef}
-                        className="flex gap-6 overflow-x-auto pb-10 no-scrollbar snap-x snap-mandatory px-4 -mx-4"
+                        className="flex gap-4 lg:gap-6 overflow-x-auto pb-6 lg:pb-10 no-scrollbar snap-x snap-mandatory px-4 -mx-4 lg:px-0 lg:mx-0"
                     >
                         {parts.map((part, index) => (
                             <motion.div
                                 key={part.id}
                                 initial="initial"
                                 whileHover="hover"
-                                className="min-w-[300px] md:min-w-[340px] snap-start bg-card rounded-[2.5rem] border border-border overflow-hidden hover:shadow-[0_30px_60px_rgba(0,0,0,0.12)] transition-all duration-500 group/card flex flex-col relative cursor-pointer"
+                                className="min-w-[270px] sm:min-w-[310px] md:min-w-[340px] snap-start bg-card rounded-[2rem] lg:rounded-[2.5rem] border border-border overflow-hidden hover:shadow-[0_30px_60px_rgba(0,0,0,0.12)] transition-all duration-500 group/card flex flex-col relative cursor-pointer"
                                 onClick={() => navigate(`/spare-part/${part.id}`)}
                             >
                                 {/* Product Image Wrapper */}

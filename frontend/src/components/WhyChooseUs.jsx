@@ -25,16 +25,15 @@ const WhyChooseUs = () => {
             desc: "Quick service response and technical support whenever you need it."
         }
     ];
-
     return (
         <section id="about" className="pt-4 pb-4 bg-card transition-colors duration-300">
             <div className="max-w-7xl mx-auto px-4 font-nunito">
-                <div className="text-center mb-16">
-                    <h2 className="text-4xl font-bold text-text-dark mb-4 font-poppins">Why Choose Siddharth RO?</h2>
-                    <p className="text-text-muted max-w-2xl mx-auto">We combine cutting-edge technology with best-in-class service to deliver purity in every drop.</p>
+                <div className="text-center mb-8 lg:mb-16">
+                    <h2 className="text-3xl lg:text-4xl font-bold text-text-dark mb-3 lg:mb-4 font-poppins">Why Choose Siddharth RO?</h2>
+                    <p className="text-text-muted max-w-2xl mx-auto text-sm lg:text-base">We combine cutting-edge technology with best-in-class service to deliver purity in every drop.</p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
                     {features.map((f, i) => (
                         <motion.div
                             key={i}
@@ -42,13 +41,13 @@ const WhyChooseUs = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1 }}
-                            className="p-8 rounded-2xl bg-bg-light dark:bg-slate-800/50 hover:bg-card border border-transparent hover:border-primary transition-all group shadow-sm hover:shadow-xl"
+                            className="p-4 sm:p-6 lg:p-8 rounded-2xl bg-bg-light dark:bg-slate-800/50 hover:bg-card border border-transparent hover:border-primary transition-all group shadow-sm hover:shadow-xl flex flex-col items-start"
                         >
-                            <div className="bg-card w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                            <div className="bg-card w-12 h-12 lg:w-16 lg:h-16 rounded-xl lg:rounded-2xl flex items-center justify-center mb-4 lg:mb-6 shadow-sm group-hover:scale-110 transition-transform [&>svg]:w-6 [&>svg]:h-6 lg:[&>svg]:w-8 lg:[&>svg]:h-8">
                                 {f.icon}
                             </div>
-                            <h3 className="text-xl font-bold text-text-dark mb-3 font-poppins">{f.title}</h3>
-                            <p className="text-text-muted leading-relaxed">{f.desc}</p>
+                            <h3 className="text-base lg:text-xl font-bold text-text-dark mb-2 lg:mb-3 font-poppins">{f.title}</h3>
+                            <p className="text-xs lg:text-base text-text-muted leading-relaxed">{f.desc}</p>
                         </motion.div>
                     ))}
                 </div>
