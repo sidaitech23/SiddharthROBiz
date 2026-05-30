@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Droplet, Menu, X, Sun, Moon, ChevronDown, ShoppingCart, Home, Wrench } from 'lucide-react';
+import { Droplet, Menu, X, Sun, Moon, ChevronDown, ShoppingCart, Home, Wrench, Info, PhoneCall, Mail, MapPin, MessageSquare, Phone } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { motion } from 'framer-motion';
 
@@ -175,58 +175,125 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
                 </div>
             </div>
 
-            {/* Mobile Menu */}
-            <div className={`md:hidden absolute top-full left-0 w-full bg-white dark:bg-slate-900 shadow-lg transition-all duration-300 overflow-hidden ${isMenuOpen ? 'max-h-[100vh] py-8' : 'max-h-0'}`}>
-                <div className="flex flex-col px-6 gap-6">
-                    {navLinks.map((link) => (
-                        <div key={link.name}>
-                            {link.isDropdown ? (
-                                <div className="space-y-4">
-                                    <span className="text-text-muted text-xs font-bold uppercase tracking-widest">{link.name}</span>
-                                    {link.subLinks.map(sub => (
-                                        <Link
-                                            key={sub.name}
-                                            to={sub.href}
-                                            onClick={() => setIsMenuOpen(false)}
-                                            className="block text-text-dark hover:text-primary font-bold font-poppins text-lg"
-                                        >
-                                            {sub.name}
-                                        </Link>
-                                    ))}
-                                </div>
-                            ) : (
-                                <Link
-                                    to={link.href}
-                                    onClick={() => setIsMenuOpen(false)}
-                                    className="text-text-dark hover:text-primary font-bold font-poppins text-lg uppercase tracking-wider"
-                                >
-                                    {link.name}
-                                </Link>
-                            )}
-                        </div>
-                    ))}
-                    <Link
-                        to="/cart"
-                        onClick={() => setIsMenuOpen(false)}
-                        className="flex items-center justify-between font-bold text-text-dark py-4 border-t border-border group"
-                    >
-                        <div className="flex items-center gap-3">
-                            <ShoppingCart size={20} className="text-primary" />
-                            <span>Shopping Cart</span>
-                        </div>
-                        {getCartCount() > 0 && (
-                            <span className="bg-primary text-white text-[10px] font-black px-2 py-1 rounded-full">
-                                {getCartCount()} Items
+            {/* Mobile Menu Drawer (Premium Bottom Sheet) */}
+            <div className={`md:hidden fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-sm transition-opacity duration-350 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsMenuOpen(false)}>
+                <div 
+                    className={`absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-900 rounded-t-[2.5rem] border-t border-slate-200/50 dark:border-slate-800/50 shadow-2xl p-6 transition-transform duration-500 overflow-y-auto ${isMenuOpen ? 'translate-y-0' : 'translate-y-full'}`}
+                    style={{ maxHeight: '85vh' }}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    {/* Drawer Handle */}
+                    <div className="w-12 h-1.5 bg-slate-200 dark:bg-slate-700/60 rounded-full mx-auto mb-6"></div>
+
+                    {/* Logo & Close */}
+                    <div className="flex justify-between items-center mb-6">
+                        <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center shadow-md">
+                                <Droplet className="text-white fill-white/20" size={18} />
+                            </div>
+                            <span className="text-lg font-black font-poppins text-text-dark">
+                                SIDDHARTH <span className="text-primary italic">RO</span>
                             </span>
-                        )}
-                    </Link>
-                    <button
-                        onClick={() => { toggleTheme(); setIsMenuOpen(false); }}
-                        className="flex items-center gap-3 font-bold text-text-dark py-4 border-t border-border w-full text-left"
-                    >
-                        {isDarkMode ? <Sun size={20} className="text-yellow-400" /> : <Moon size={20} className="text-slate-700" />}
-                        {isDarkMode ? "Light Mode" : "Dark Mode"}
-                    </button>
+                        </div>
+                        <button 
+                            onClick={() => setIsMenuOpen(false)}
+                            className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-text-dark hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                        >
+                            <X size={18} />
+                        </button>
+                    </div>
+
+                    {/* Navigation Links */}
+                    <div className="space-y-3 mb-8">
+                        <span className="text-slate-400 dark:text-slate-500 text-[10px] font-black uppercase tracking-widest block mb-1 pl-1">Navigation</span>
+                        
+                        <Link
+                            to="/"
+                            onClick={() => setIsMenuOpen(false)}
+                            className={`flex items-center gap-3 p-3 rounded-2xl transition-all duration-300 ${location.pathname === '/' ? 'bg-primary/10 text-primary font-bold shadow-sm' : 'text-text-dark hover:bg-slate-50 dark:hover:bg-slate-800/40'}`}
+                        >
+                            <Home size={18} className={location.pathname === '/' ? 'text-primary' : 'text-slate-400'} />
+                            <span className="font-poppins text-xs font-bold uppercase tracking-wider">Home</span>
+                        </Link>
+
+                        <div className="border-t border-slate-100 dark:border-slate-800/50 my-2"></div>
+                        <span className="text-slate-400 dark:text-slate-500 text-[10px] font-black uppercase tracking-widest block mb-1 pl-1">Our Products</span>
+
+                        <Link
+                            to="/purifiers"
+                            onClick={() => setIsMenuOpen(false)}
+                            className={`flex items-center gap-3 p-3 rounded-2xl transition-all duration-300 ${location.pathname === '/purifiers' ? 'bg-primary/10 text-primary font-bold shadow-sm' : 'text-text-dark hover:bg-slate-50 dark:hover:bg-slate-800/40'}`}
+                        >
+                            <Droplet size={18} className={location.pathname === '/purifiers' ? 'text-primary' : 'text-slate-400'} />
+                            <span className="font-poppins text-xs font-bold uppercase tracking-wider">RO Purifiers</span>
+                        </Link>
+
+                        <Link
+                            to="/spare-parts"
+                            onClick={() => setIsMenuOpen(false)}
+                            className={`flex items-center gap-3 p-3 rounded-2xl transition-all duration-300 ${location.pathname === '/spare-parts' ? 'bg-primary/10 text-primary font-bold shadow-sm' : 'text-text-dark hover:bg-slate-50 dark:hover:bg-slate-800/40'}`}
+                        >
+                            <Wrench size={18} className={location.pathname === '/spare-parts' ? 'text-primary' : 'text-slate-400'} />
+                            <span className="font-poppins text-xs font-bold uppercase tracking-wider">RO Spare Parts</span>
+                        </Link>
+
+                        <div className="border-t border-slate-100 dark:border-slate-800/50 my-2"></div>
+                        <span className="text-slate-400 dark:text-slate-500 text-[10px] font-black uppercase tracking-widest block mb-1 pl-1">Company</span>
+
+                        <Link
+                            to="/about"
+                            onClick={() => setIsMenuOpen(false)}
+                            className={`flex items-center gap-3 p-3 rounded-2xl transition-all duration-300 ${location.pathname === '/about' ? 'bg-primary/10 text-primary font-bold shadow-sm' : 'text-text-dark hover:bg-slate-50 dark:hover:bg-slate-800/40'}`}
+                        >
+                            <Info size={18} className={location.pathname === '/about' ? 'text-primary' : 'text-slate-400'} />
+                            <span className="font-poppins text-xs font-bold uppercase tracking-wider">About Us</span>
+                        </Link>
+
+                        <Link
+                            to="/contact"
+                            onClick={() => setIsMenuOpen(false)}
+                            className={`flex items-center gap-3 p-3 rounded-2xl transition-all duration-300 ${location.pathname === '/contact' ? 'bg-primary/10 text-primary font-bold shadow-sm' : 'text-text-dark hover:bg-slate-50 dark:hover:bg-slate-800/40'}`}
+                        >
+                            <PhoneCall size={18} className={location.pathname === '/contact' ? 'text-primary' : 'text-slate-400'} />
+                            <span className="font-poppins text-xs font-bold uppercase tracking-wider">Contact Us</span>
+                        </Link>
+                    </div>
+
+                    {/* Support & Quick Contact Card */}
+                    <div className="bg-gradient-to-br from-slate-50 to-blue-50/20 dark:from-slate-800/30 dark:to-slate-900/10 p-5 rounded-[2rem] border border-slate-150 dark:border-slate-800/80 mb-4">
+                        <h4 className="font-poppins text-xs font-black text-text-dark tracking-wider mb-3">Quick Support & Sales</h4>
+                        <div className="space-y-3 font-nunito text-xs text-text-muted">
+                            <div className="flex items-center gap-2">
+                                <Phone size={14} className="text-primary" />
+                                <a href="tel:+919925852850" className="hover:text-primary transition-colors font-bold text-text-dark">+91 9925852850</a>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Mail size={14} className="text-primary" />
+                                <a href="mailto:support@siddharthro.in" className="hover:text-primary transition-colors font-bold text-text-dark">support@siddharthro.in</a>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <MapPin size={14} className="text-primary" />
+                                <span className="font-bold text-text-dark">Moti Bazar, Gondal, Gujarat</span>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3 mt-4">
+                            <a
+                                href="tel:+919925852850"
+                                className="bg-primary hover:bg-primary-dark text-white font-poppins text-xs font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all"
+                            >
+                                <Phone size={14} /> Call Now
+                            </a>
+                            <a
+                                href="https://wa.me/919925852850"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="bg-emerald-600 hover:bg-emerald-700 text-white font-poppins text-xs font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all"
+                            >
+                                <MessageSquare size={14} /> WhatsApp
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>

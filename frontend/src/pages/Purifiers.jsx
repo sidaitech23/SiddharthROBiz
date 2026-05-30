@@ -123,7 +123,7 @@ const Purifiers = ({ isDarkMode }) => {
                                                     e.stopPropagation();
                                                     handleAddToCart(product, e);
                                                 }}
-                                                className="w-full py-3 rounded-xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2 bg-primary text-white hover:bg-primary-dark hover:shadow-primary/40 active:scale-95 duration-300 shadow-xl"
+                                                className="w-full py-3 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-blue-600 text-white hover:shadow-md hover:shadow-primary/20 active:scale-95 duration-300"
                                             >
                                                 <ShoppingCart size={14} />
                                                 Add

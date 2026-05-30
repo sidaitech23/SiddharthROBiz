@@ -38,16 +38,19 @@ const Hero = ({ isDarkMode }) => {
                     <p className="text-xl text-text-muted mb-8 max-w-lg font-nunito">
                         India's Most Trusted RO Purifiers for Every Home. Get 100% pure water with our advanced 5-stage purification technology.
                     </p>
-                    <div className="flex flex-wrap gap-4">
+                    <div className="flex flex-col sm:flex-row gap-4">
                         <button
                             onClick={() => navigate('/purifiers')}
-                            className="bg-primary text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-primary-dark transition-all shadow-lg hover:shadow-primary/50"
+                            className="bg-gradient-to-r from-primary to-blue-600 text-white px-10 py-4 rounded-2xl font-bold text-lg hover:shadow-[0_15px_30px_rgba(2,132,199,0.4)] active:scale-[0.98] transition-all duration-300 shadow-lg text-center flex items-center justify-center gap-2 group"
                         >
-                            Shop Models
+                            <span>Shop Models</span>
+                            <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
                         </button>
                         <button
                             onClick={() => navigate('/spare-parts')}
-                            className="bg-white text-primary px-10 py-4 rounded-full font-bold text-lg hover:bg-slate-50 transition-all shadow-lg hover:shadow-xl active:scale-95"
+                            className="bg-white dark:bg-slate-800/80 text-primary dark:text-white border border-slate-200 dark:border-slate-700/60 px-10 py-4 rounded-2xl font-bold text-lg hover:bg-slate-50 dark:hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-100/10 transition-all duration-300 active:scale-[0.98] text-center flex items-center justify-center"
                         >
                             Shop Spare Parts
                         </button>
