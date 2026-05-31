@@ -341,12 +341,12 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
             {/* Mobile Menu Drawer (Premium Bottom Sheet) */}
             <div className={`lg:hidden fixed inset-0 z-[60] bg-slate-950/60 backdrop-blur-sm transition-opacity duration-350 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsMenuOpen(false)}>
                 <div 
-                    className={`absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-900 rounded-t-[2.5rem] border-t border-slate-200/50 dark:border-slate-800/50 shadow-2xl p-6 transition-transform duration-500 overflow-y-auto ${isMenuOpen ? 'translate-y-0' : 'translate-y-full'}`}
-                    style={{ maxHeight: '85vh' }}
+                    className={`absolute bottom-0 left-0 right-0 bg-white/95 dark:bg-slate-950/95 backdrop-blur-2xl rounded-t-[3rem] border-t border-white/20 dark:border-slate-800/50 shadow-[0_-15px_40px_rgba(0,0,0,0.15)] p-6 transition-transform duration-500 overflow-y-auto ${isMenuOpen ? 'translate-y-0' : 'translate-y-full'}`}
+                    style={{ maxHeight: '80vh' }}
                     onClick={(e) => e.stopPropagation()}
                 >
                     {/* Drawer Handle */}
-                    <div className="w-12 h-1.5 bg-slate-200 dark:bg-slate-700/60 rounded-full mx-auto mb-6"></div>
+                    <div className="w-12 h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full mx-auto mb-6"></div>
 
                     {/* Logo & Close */}
                     <div className="flex justify-between items-center mb-6">
@@ -360,32 +360,32 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
                         </div>
                         <button 
                             onClick={() => setIsMenuOpen(false)}
-                            className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-text-dark hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                            className="p-2.5 rounded-full bg-slate-100 dark:bg-slate-900 text-text-dark hover:bg-slate-200 dark:hover:bg-slate-800 active:scale-90 transition-all duration-200"
                         >
                             <X size={18} />
                         </button>
                     </div>
 
                     {/* Navigation Links */}
-                    <div className="space-y-3 mb-8">
-                        <span className="text-slate-400 dark:text-slate-500 text-[10px] font-black uppercase tracking-widest block mb-1 pl-1">Navigation</span>
+                    <div className="space-y-2 mb-8">
+                        <span className="text-slate-400 dark:text-slate-500 text-[10px] font-black uppercase tracking-widest block mb-2 pl-1">Navigation</span>
                         
                         <Link
                             to="/"
                             onClick={() => setIsMenuOpen(false)}
-                            className={`flex items-center gap-3 p-3 rounded-2xl transition-all duration-300 ${location.pathname === '/' ? 'bg-primary/10 text-primary font-bold shadow-sm' : 'text-text-dark hover:bg-slate-50 dark:hover:bg-slate-800/40'}`}
+                            className={`flex items-center gap-3 p-3 rounded-2xl active:scale-[0.98] transition-all duration-200 ${location.pathname === '/' ? 'bg-primary/10 text-primary font-bold shadow-sm' : 'text-text-dark hover:bg-slate-50 dark:hover:bg-slate-900/40'}`}
                         >
                             <Home size={18} className={location.pathname === '/' ? 'text-primary' : 'text-slate-400'} />
                             <span className="font-poppins text-xs font-bold uppercase tracking-wider">Home</span>
                         </Link>
 
-                        <div className="border-t border-slate-100 dark:border-slate-800/50 my-2"></div>
-                        <span className="text-slate-400 dark:text-slate-500 text-[10px] font-black uppercase tracking-widest block mb-1 pl-1">Our Products</span>
+                        <div className="border-t border-slate-100 dark:border-slate-900 my-3"></div>
+                        <span className="text-slate-400 dark:text-slate-500 text-[10px] font-black uppercase tracking-widest block mb-2 pl-1">Our Products</span>
 
                         <Link
                             to="/purifiers"
                             onClick={() => setIsMenuOpen(false)}
-                            className={`flex items-center gap-3 p-3 rounded-2xl transition-all duration-300 ${location.pathname === '/purifiers' ? 'bg-primary/10 text-primary font-bold shadow-sm' : 'text-text-dark hover:bg-slate-50 dark:hover:bg-slate-800/40'}`}
+                            className={`flex items-center gap-3 p-3 rounded-2xl active:scale-[0.98] transition-all duration-200 ${location.pathname === '/purifiers' ? 'bg-primary/10 text-primary font-bold shadow-sm' : 'text-text-dark hover:bg-slate-50 dark:hover:bg-slate-900/40'}`}
                         >
                             <Droplet size={18} className={location.pathname === '/purifiers' ? 'text-primary' : 'text-slate-400'} />
                             <span className="font-poppins text-xs font-bold uppercase tracking-wider">RO Purifiers</span>
@@ -394,19 +394,19 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
                         <Link
                             to="/spare-parts"
                             onClick={() => setIsMenuOpen(false)}
-                            className={`flex items-center gap-3 p-3 rounded-2xl transition-all duration-300 ${location.pathname === '/spare-parts' ? 'bg-primary/10 text-primary font-bold shadow-sm' : 'text-text-dark hover:bg-slate-50 dark:hover:bg-slate-800/40'}`}
+                            className={`flex items-center gap-3 p-3 rounded-2xl active:scale-[0.98] transition-all duration-200 ${location.pathname === '/spare-parts' ? 'bg-primary/10 text-primary font-bold shadow-sm' : 'text-text-dark hover:bg-slate-50 dark:hover:bg-slate-900/40'}`}
                         >
                             <Wrench size={18} className={location.pathname === '/spare-parts' ? 'text-primary' : 'text-slate-400'} />
                             <span className="font-poppins text-xs font-bold uppercase tracking-wider">RO Spare Parts</span>
                         </Link>
 
-                        <div className="border-t border-slate-100 dark:border-slate-800/50 my-2"></div>
-                        <span className="text-slate-400 dark:text-slate-500 text-[10px] font-black uppercase tracking-widest block mb-1 pl-1">Company</span>
+                        <div className="border-t border-slate-100 dark:border-slate-900 my-3"></div>
+                        <span className="text-slate-400 dark:text-slate-500 text-[10px] font-black uppercase tracking-widest block mb-2 pl-1">Company</span>
 
                         <Link
                             to="/about"
                             onClick={() => setIsMenuOpen(false)}
-                            className={`flex items-center gap-3 p-3 rounded-2xl transition-all duration-300 ${location.pathname === '/about' ? 'bg-primary/10 text-primary font-bold shadow-sm' : 'text-text-dark hover:bg-slate-50 dark:hover:bg-slate-800/40'}`}
+                            className={`flex items-center gap-3 p-3 rounded-2xl active:scale-[0.98] transition-all duration-200 ${location.pathname === '/about' ? 'bg-primary/10 text-primary font-bold shadow-sm' : 'text-text-dark hover:bg-slate-50 dark:hover:bg-slate-900/40'}`}
                         >
                             <Info size={18} className={location.pathname === '/about' ? 'text-primary' : 'text-slate-400'} />
                             <span className="font-poppins text-xs font-bold uppercase tracking-wider">About Us</span>
@@ -415,7 +415,7 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
                         <Link
                             to="/contact"
                             onClick={() => setIsMenuOpen(false)}
-                            className={`flex items-center gap-3 p-3 rounded-2xl transition-all duration-300 ${location.pathname === '/contact' ? 'bg-primary/10 text-primary font-bold shadow-sm' : 'text-text-dark hover:bg-slate-50 dark:hover:bg-slate-800/40'}`}
+                            className={`flex items-center gap-3 p-3 rounded-2xl active:scale-[0.98] transition-all duration-200 ${location.pathname === '/contact' ? 'bg-primary/10 text-primary font-bold shadow-sm' : 'text-text-dark hover:bg-slate-50 dark:hover:bg-slate-900/40'}`}
                         >
                             <PhoneCall size={18} className={location.pathname === '/contact' ? 'text-primary' : 'text-slate-400'} />
                             <span className="font-poppins text-xs font-bold uppercase tracking-wider">Contact Us</span>
@@ -423,7 +423,7 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
                     </div>
 
                     {/* Support & Quick Contact Card */}
-                    <div className="bg-gradient-to-br from-slate-50 to-blue-50/20 dark:from-slate-800/30 dark:to-slate-900/10 p-5 rounded-[2rem] border border-slate-150 dark:border-slate-800/80 mb-4">
+                    <div className="bg-gradient-to-br from-blue-50/50 to-sky-50/10 dark:from-slate-900/40 dark:to-slate-950/20 p-5 rounded-[2.25rem] border border-blue-100/40 dark:border-slate-800/80 mb-6 shadow-sm">
                         <h4 className="font-poppins text-xs font-black text-text-dark tracking-wider mb-3">Quick Support & Sales</h4>
                         <div className="space-y-3 font-nunito text-xs text-text-muted">
                             <div className="flex items-center gap-2">
@@ -440,10 +440,10 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-3 mt-4">
+                        <div className="grid grid-cols-2 gap-3 mt-5">
                             <a
                                 href="tel:+919925852850"
-                                className="bg-primary hover:bg-primary-dark text-white font-poppins text-xs font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all"
+                                className="bg-gradient-to-r from-primary to-blue-600 text-white font-poppins text-xs font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-1.5 shadow-md active:scale-95 active:translate-y-0.5 transition-all duration-200"
                             >
                                 <Phone size={14} /> Call Now
                             </a>
@@ -451,7 +451,7 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
                                 href="https://wa.me/919925852850"
                                 target="_blank"
                                 rel="noreferrer"
-                                className="bg-emerald-600 hover:bg-emerald-700 text-white font-poppins text-xs font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all"
+                                className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-poppins text-xs font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-1.5 shadow-md active:scale-95 active:translate-y-0.5 transition-all duration-200"
                             >
                                 <MessageSquare size={14} /> WhatsApp
                             </a>
@@ -461,9 +461,9 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
             </div>
         </nav>
 
-        {/* Mobile & Tablet Bottom Navigation Bar (Android-style bottom navigation) */}
+        {/* Mobile & Tablet Bottom Navigation Bar (Premium Floating Dock) */}
         {!isKeyboardOpen && (
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-t border-slate-200/50 dark:border-slate-800/80 shadow-[0_-8px_30px_rgba(0,0,0,0.05)] py-2.5 px-3 flex justify-around items-center h-[72px]">
+            <div className="lg:hidden fixed bottom-4 left-4 right-4 md:left-8 md:right-8 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border border-white/20 dark:border-slate-800/60 shadow-[0_15px_40px_rgba(0,0,0,0.12)] rounded-3xl py-2 px-3 flex justify-around items-center h-[68px] transition-all duration-300">
                 {bottomNavLinks.map((link) => {
                     const isActive = link.isMenuToggle
                         ? isMenuOpen
@@ -471,28 +471,53 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
                             ? location.pathname === '/'
                             : location.pathname.startsWith(link.href);
                     
+                    const isMenuLink = link.isMenuToggle;
+                    const iconElement = isMenuLink ? (
+                        <motion.div
+                            key={isMenuOpen ? "open" : "closed"}
+                            initial={{ rotate: -90, opacity: 0 }}
+                            animate={{ rotate: 0, opacity: 1 }}
+                            exit={{ rotate: 90, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="flex items-center justify-center"
+                        >
+                            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                        </motion.div>
+                    ) : (
+                        link.icon
+                    );
+
                     const content = (
                         <motion.div 
-                            className="flex flex-col items-center gap-1 cursor-pointer select-none"
+                            className="flex flex-col items-center gap-0.5 cursor-pointer select-none"
                             whileTap={{ scale: 0.9 }}
                             transition={{ type: "spring", stiffness: 400, damping: 15 }}
                         >
-                            <div className={`px-5 py-1.5 rounded-full transition-all duration-300 relative ${
-                                isActive 
-                                    ? 'bg-primary/10 text-primary dark:bg-primary/20' 
-                                    : 'text-slate-400 dark:text-slate-500 hover:text-primary'
-                            }`}>
-                                <div className="relative">
-                                    {link.icon}
-                                    {link.name === 'Cart' && getCartCount() > 0 && (
-                                        <span className="absolute -top-2.5 -right-3.5 bg-primary text-white text-[8px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center border border-white dark:border-slate-900 shadow-md">
-                                            {getCartCount()}
-                                        </span>
+                            <div className="relative">
+                                <div className={`px-5 py-1.5 rounded-2xl transition-all duration-300 relative flex items-center justify-center ${
+                                    isActive 
+                                        ? 'text-primary' 
+                                        : 'text-slate-400 dark:text-slate-500 hover:text-primary'
+                                }`}>
+                                    {isActive && (
+                                        <motion.div
+                                            layoutId="bottomNavActive"
+                                            className="absolute inset-0 bg-primary/10 dark:bg-primary/25 rounded-2xl -z-10"
+                                            transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                                        />
                                     )}
+                                    <div className="relative">
+                                        {iconElement}
+                                        {link.name === 'Cart' && getCartCount() > 0 && (
+                                            <span className="absolute -top-2 -right-3.5 bg-primary text-white text-[8px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center border border-white dark:border-slate-900 shadow-md">
+                                                {getCartCount()}
+                                            </span>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                             <span className={`text-[9px] font-black uppercase tracking-widest font-poppins transition-colors duration-300 ${
-                                isActive ? 'text-primary font-bold' : 'text-slate-400 dark:text-slate-500'
+                                isActive ? 'text-primary font-black scale-105' : 'text-slate-400 dark:text-slate-500'
                             }`}>
                                 {link.name}
                             </span>

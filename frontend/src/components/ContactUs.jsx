@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Phone, Mail, MapPin, MessageCircle } from 'lucide-react';
+import { Phone, Mail, MapPin, MessageCircle, User, MessageSquare, Droplet, ChevronDown } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
@@ -92,47 +92,77 @@ const ContactUs = () => {
                         initial={{ opacity: 0, x: 30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        className="bg-card p-5 sm:p-8 lg:p-12 rounded-[2rem] lg:rounded-3xl shadow-xl h-fit border border-border"
+                        className="bg-card/75 dark:bg-slate-900/75 backdrop-blur-xl p-5 sm:p-8 lg:p-12 rounded-[2.25rem] lg:rounded-3xl shadow-2xl h-fit border border-white/20 dark:border-slate-800/80 relative overflow-hidden"
                     >
-                        <h3 className="text-xl lg:text-2xl font-bold text-text-dark mb-4 lg:mb-6 font-poppins">Send Enquiry</h3>
+                        {/* Soft background glows on mobile */}
+                        <div className="absolute -top-10 -right-10 w-24 h-24 bg-primary/10 rounded-full blur-2xl pointer-events-none"></div>
+                        <div className="absolute -bottom-10 -left-10 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+                        <h3 className="text-xl lg:text-2xl font-bold text-text-dark mb-5 lg:mb-6 font-poppins text-left">Send Enquiry</h3>
                         <form onSubmit={handleSubmit} className="space-y-4 font-nunito">
                             <div className="grid md:grid-cols-2 gap-4">
-                                <input
-                                    type="text" placeholder="Full Name" required
-                                    className="w-full p-3.5 lg:p-4 bg-bg-light dark:bg-slate-800 border border-border rounded-xl lg:rounded-2xl focus:outline-none focus:border-primary text-text-dark"
-                                    value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                />
-                                <input
-                                    type="tel" placeholder="Mobile Number" required
-                                    className="w-full p-3.5 lg:p-4 bg-bg-light dark:bg-slate-800 border border-border rounded-xl lg:rounded-2xl focus:outline-none focus:border-primary text-text-dark"
-                                    value={formData.mobile} onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
-                                />
+                                <div className="relative flex items-center">
+                                    <User className="absolute left-4 text-slate-400 dark:text-slate-500" size={18} />
+                                    <input
+                                        type="text" placeholder="Full Name" required
+                                        className="w-full pl-12 pr-4 py-3.5 lg:p-4 bg-bg-light/60 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60 focus:border-primary rounded-xl lg:rounded-2xl focus:outline-none focus:ring-4 focus:ring-primary/10 text-text-dark placeholder-slate-400 transition-all font-nunito"
+                                        value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                    />
+                                </div>
+                                <div className="relative flex items-center">
+                                    <Phone className="absolute left-4 text-slate-400 dark:text-slate-500" size={18} />
+                                    <input
+                                        type="tel" placeholder="Mobile Number" required
+                                        className="w-full pl-12 pr-4 py-3.5 lg:p-4 bg-bg-light/60 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60 focus:border-primary rounded-xl lg:rounded-2xl focus:outline-none focus:ring-4 focus:ring-primary/10 text-text-dark placeholder-slate-400 transition-all font-nunito"
+                                        value={formData.mobile} onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+                                    />
+                                </div>
                             </div>
                             <div className="grid md:grid-cols-2 gap-4">
-                                <input
-                                    type="text" placeholder="City" required
-                                    className="w-full p-3.5 lg:p-4 bg-bg-light dark:bg-slate-800 border border-border rounded-xl lg:rounded-2xl focus:outline-none focus:border-primary text-text-dark"
-                                    value={formData.city} onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                                />
-                                <select
-                                    className="w-full p-3.5 lg:p-4 bg-bg-light dark:bg-slate-800 border border-border rounded-xl lg:rounded-2xl focus:outline-none focus:border-primary appearance-none text-text-dark"
-                                    value={formData.productInterest} onChange={(e) => setFormData({ ...formData, productInterest: e.target.value })}
-                                    required
-                                >
-                                    <option value="">Interested in...</option>
-                                    {products.map(p => <option key={p} value={p}>{p}</option>)}
-                                </select>
+                                <div className="relative flex items-center">
+                                    <MapPin className="absolute left-4 text-slate-400 dark:text-slate-500" size={18} />
+                                    <input
+                                        type="text" placeholder="City" required
+                                        className="w-full pl-12 pr-4 py-3.5 lg:p-4 bg-bg-light/60 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60 focus:border-primary rounded-xl lg:rounded-2xl focus:outline-none focus:ring-4 focus:ring-primary/10 text-text-dark placeholder-slate-400 transition-all font-nunito"
+                                        value={formData.city} onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                                    />
+                                </div>
+                                <div className="relative flex items-center">
+                                    <Droplet className="absolute left-4 text-slate-400 dark:text-slate-500" size={18} />
+                                    <select
+                                        className="w-full pl-12 pr-10 py-3.5 lg:p-4 bg-bg-light/60 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60 focus:border-primary rounded-xl lg:rounded-2xl focus:outline-none focus:ring-4 focus:ring-primary/10 appearance-none text-text-dark font-nunito"
+                                        value={formData.productInterest} onChange={(e) => setFormData({ ...formData, productInterest: e.target.value })}
+                                        required
+                                    >
+                                        <option value="" className="text-slate-400">Interested in...</option>
+                                        {products.map(p => <option key={p} value={p}>{p}</option>)}
+                                    </select>
+                                    <ChevronDown className="absolute right-4 text-slate-400 pointer-events-none" size={18} />
+                                </div>
                             </div>
-                            <textarea
-                                placeholder="How can we help you?" rows="4" required
-                                className="w-full p-3.5 lg:p-4 bg-bg-light dark:bg-slate-800 border border-border rounded-xl lg:rounded-2xl focus:outline-none focus:border-primary resize-none text-text-dark"
-                                value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                            ></textarea>
+                            <div className="relative flex items-start">
+                                <MessageSquare className="absolute left-4 top-4 text-slate-400 dark:text-slate-500" size={18} />
+                                <textarea
+                                    placeholder="How can we help you?" rows="4" required
+                                    className="w-full pl-12 pr-4 py-3.5 lg:p-4 bg-bg-light/60 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60 focus:border-primary rounded-xl lg:rounded-2xl focus:outline-none focus:ring-4 focus:ring-primary/10 resize-none text-text-dark placeholder-slate-400 transition-all font-nunito"
+                                    value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                                ></textarea>
+                            </div>
                             <button
                                 type="submit" disabled={isSubmitting}
-                                className="w-full bg-gradient-to-r from-primary to-blue-600 text-white py-3.5 lg:py-4 rounded-xl lg:rounded-2xl font-bold text-lg hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-[0.97] disabled:opacity-50 shadow-md"
+                                className="w-full bg-gradient-to-r from-primary to-blue-600 hover:from-primary-dark hover:to-blue-700 text-white py-4 rounded-xl lg:rounded-2xl font-bold text-lg hover:shadow-lg hover:shadow-primary/20 active:scale-[0.98] active:translate-y-0.5 transition-all duration-200 disabled:opacity-50 shadow-md flex items-center justify-center gap-2 select-none"
                             >
-                                {isSubmitting ? "Sending..." : "Send Enquiry"}
+                                {isSubmitting ? (
+                                    <>
+                                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        <span>Sending...</span>
+                                    </>
+                                ) : (
+                                    <span>Send Enquiry</span>
+                                )}
                             </button>
                         </form>
                     </motion.div>
